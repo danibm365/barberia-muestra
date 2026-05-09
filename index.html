@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navaja & Co. — Barbería en Vigo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --dark: #1a1410;
+      --brown: #2c1f14;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --rust: #8b3a2a;
+      --muted: #7a6e62;
+      --border: rgba(201,168,76,0.25);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(26,20,16,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 900;
+      color: var(--gold); letter-spacing: 0.05em;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: rgba(245,240,232,0.75);
+      text-decoration: none; font-size: 0.85rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold); color: var(--dark);
+      padding: 0.6rem 1.4rem; border-radius: 2px;
+      font-size: 0.8rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-light); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--dark);
+      display: grid; grid-template-columns: 1fr 1fr;
+      position: relative; overflow: hidden;
+    }
+    .hero-texture {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 60% 50%, rgba(201,168,76,0.08) 0%, transparent 70%),
+        repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(201,168,76,0.03) 40px, rgba(201,168,76,0.03) 41px),
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(201,168,76,0.03) 40px, rgba(201,168,76,0.03) 41px);
+      pointer-events: none;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 4rem 6rem 5rem; position: relative; z-index: 2;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.8rem;
+    }
+    .hero-tag::before {
+      content: ''; width: 30px; height: 1px; background: var(--gold);
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 900; line-height: 1.05;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title span { color: var(--gold); font-style: italic; }
+    .hero-desc {
+      font-size: 1rem; line-height: 1.7;
+      color: rgba(245,240,232,0.6);
+      max-width: 400px; margin-bottom: 2.5rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--gold); color: var(--dark);
+      padding: 1rem 2.2rem; border-radius: 2px;
+      font-weight: 500; font-size: 0.9rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.2s;
+      border: none; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-outline {
+      border: 1px solid rgba(201,168,76,0.5); color: var(--gold);
+      padding: 1rem 2.2rem; border-radius: 2px;
+      font-weight: 400; font-size: 0.9rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.1); }
+    .hero-right {
+      position: relative; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-visual {
+      width: 420px; height: 520px;
+      background: var(--brown);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-visual-inner {
+      text-align: center; padding: 2rem;
+    }
+    .barber-icon {
+      font-size: 5rem; display: block; margin-bottom: 1.5rem;
+      filter: sepia(1) saturate(0.5);
+    }
+    .hero-visual-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; color: var(--gold); margin-bottom: 0.5rem;
+    }
+    .hero-visual-sub {
+      font-size: 0.8rem; color: var(--muted);
+      letter-spacing: 0.15em; text-transform: uppercase;
+    }
+    .hero-visual::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .hero-stats {
+      position: absolute; bottom: 3rem; left: 5rem;
+      display: flex; gap: 3rem; z-index: 2;
+    }
+    .stat { text-align: left; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700; color: var(--gold);
+    }
+    .stat-label {
+      font-size: 0.75rem; color: rgba(245,240,232,0.5);
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    /* ── SECTIONS COMMON ── */
+    section { padding: 6rem 5rem; }
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+    .section-tag::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700; line-height: 1.15;
+      color: var(--dark); margin-bottom: 1rem;
+    }
+    .section-title.light { color: var(--cream); }
+
+    /* ── SERVICIOS ── */
+    .servicios { background: var(--cream); }
+    .servicios-header { text-align: center; max-width: 560px; margin: 0 auto 4rem; }
+    .servicios-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px; background: rgba(44,31,20,0.12);
+      border: 1.5px solid rgba(44,31,20,0.12);
+    }
+    .servicio {
+      background: var(--cream); padding: 2.5rem 2rem;
+      transition: background 0.3s; cursor: default;
+      border: none;
+    }
+    .servicio:hover { background: var(--dark); }
+    .servicio:hover .s-name, .servicio:hover .s-desc { color: var(--cream); }
+    .servicio:hover .s-price { color: var(--gold); }
+    .servicio:hover .s-num { color: rgba(201,168,76,0.3); }
+    .s-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem; color: rgba(44,31,20,0.2);
+      letter-spacing: 0.2em; margin-bottom: 1.5rem;
+      transition: color 0.3s;
+    }
+    .s-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--dark); margin-bottom: 0.6rem;
+      transition: color 0.3s;
+    }
+    .s-desc {
+      font-size: 0.88rem; color: var(--muted); line-height: 1.6;
+      margin-bottom: 1.5rem; transition: color 0.3s;
+    }
+    .s-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700; color: var(--rust);
+      transition: color 0.3s;
+    }
+
+    /* ── SOBRE ── */
+    .sobre {
+      background: var(--brown);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+      align-items: center;
+    }
+    .sobre-visual {
+      position: relative; height: 480px;
+    }
+    .sobre-img {
+      width: 100%; height: 100%;
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem;
+    }
+    .sobre-badge {
+      position: absolute; bottom: -20px; right: -20px;
+      width: 120px; height: 120px; border-radius: 50%;
+      background: var(--gold);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+    }
+    .sobre-badge span:first-child {
+      font-size: 1.8rem; font-weight: 900; color: var(--dark); line-height: 1;
+    }
+    .sobre-badge span:last-child {
+      font-size: 0.6rem; color: var(--dark); letter-spacing: 0.1em;
+      text-transform: uppercase; text-align: center;
+    }
+    .sobre-content .section-title { margin-bottom: 1.5rem; }
+    .sobre-text {
+      font-size: 0.95rem; line-height: 1.8;
+      color: rgba(245,240,232,0.65); margin-bottom: 1rem;
+    }
+    .sobre-puntos { list-style: none; margin: 2rem 0; }
+    .sobre-puntos li {
+      display: flex; align-items: center; gap: 0.8rem;
+      font-size: 0.9rem; color: rgba(245,240,232,0.8);
+      padding: 0.6rem 0; border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+    .sobre-puntos li::before {
+      content: '✦'; color: var(--gold); font-size: 0.6rem; flex-shrink: 0;
+    }
+
+    /* ── RESERVA ── */
+    .reserva {
+      background: var(--dark);
+      text-align: center; padding: 7rem 5rem;
+      position: relative; overflow: hidden;
+    }
+    .reserva::before {
+      content: '';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .reserva .section-tag { justify-content: center; }
+    .reserva .section-title { color: var(--cream); margin-bottom: 1rem; }
+    .reserva-sub {
+      font-size: 1rem; color: rgba(245,240,232,0.5);
+      max-width: 440px; margin: 0 auto 2.5rem; line-height: 1.7;
+    }
+    .reserva-form {
+      display: flex; gap: 1rem; justify-content: center;
+      flex-wrap: wrap; max-width: 560px; margin: 0 auto;
+    }
+    .reserva-form input, .reserva-form select {
+      flex: 1; min-width: 180px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border); border-radius: 2px;
+      color: var(--cream); padding: 1rem 1.2rem;
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .reserva-form input::placeholder { color: rgba(245,240,232,0.35); }
+    .reserva-form input:focus, .reserva-form select:focus { border-color: var(--gold); }
+    .reserva-form select { color: rgba(245,240,232,0.6); }
+    .reserva-form select option { background: var(--dark); }
+
+    /* ── HORARIO ── */
+    .horario {
+      background: var(--cream);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      align-items: start;
+    }
+    .horario-table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+    .horario-table tr {
+      border-bottom: 1px solid rgba(44,31,20,0.1);
+    }
+    .horario-table td {
+      padding: 0.9rem 0; font-size: 0.9rem;
+    }
+    .horario-table td:last-child {
+      text-align: right; color: var(--muted); font-weight: 300;
+    }
+    .horario-table tr.hoy td { color: var(--rust); font-weight: 500; }
+    .horario-contact { margin-top: 3rem; }
+    .contact-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 0; border-bottom: 1px solid rgba(44,31,20,0.08);
+      font-size: 0.9rem;
+    }
+    .contact-icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--dark); color: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .contact-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .contact-value { font-size: 0.95rem; color: var(--dark); font-weight: 500; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      padding: 2.5rem 5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--border);
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; color: var(--gold); font-weight: 900;
+    }
+    .footer-copy {
+      font-size: 0.8rem; color: rgba(245,240,232,0.35);
+    }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 0.8rem; color: rgba(245,240,232,0.4);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── ANIMACIONES ── */
+    .fade-in {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 7rem 2rem 3rem; }
+      .hero-right { display: none; }
+      .hero-stats { left: 2rem; bottom: 2rem; }
+      section { padding: 4rem 1.5rem; }
+      .servicios-grid { grid-template-columns: 1fr; }
+      .sobre { grid-template-columns: 1fr; }
+      .sobre-visual { height: 280px; }
+      .horario { grid-template-columns: 1fr; gap: 2rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+      .reserva { padding: 5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Navaja & Co.</div>
+    <ul class="nav-links">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#sobre">Nosotros</a></li>
+      <li><a href="#horario">Contacto</a></li>
+    </ul>
+    <a href="#reserva" class="nav-cta">Reservar cita</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-texture"></div>
+    <div class="hero-left">
+      <span class="hero-tag">Barbería tradicional · Vigo</span>
+      <h1 class="hero-title">
+        El arte de<br>
+        un buen <span>corte</span>
+      </h1>
+      <p class="hero-desc">
+        Desde 2008 cuidando el aspecto de los hombres de Vigo. Cortes clásicos, barbas trabajadas y el ambiente de una barbería de toda la vida.
+      </p>
+      <div class="hero-btns">
+        <a href="#reserva" class="btn-primary">Reservar cita</a>
+        <a href="#servicios" class="btn-outline">Ver servicios</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual">
+        <div class="hero-visual-inner">
+          <span class="barber-icon">✂️</span>
+          <div class="hero-visual-title">Navaja & Co.</div>
+          <div class="hero-visual-sub">Barbería · Est. 2008</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">+15</div>
+        <div class="stat-label">Años de experiencia</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">+800</div>
+        <div class="stat-label">Clientes habituales</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5★</div>
+        <div class="stat-label">Valoración Google</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="servicios" id="servicios">
+    <div class="servicios-header">
+      <div class="section-tag">Lo que hacemos</div>
+      <h2 class="section-title">Nuestros servicios</h2>
+      <p style="color:var(--muted);font-size:0.95rem;line-height:1.7">Cada servicio está pensado para que salgas con un resultado impecable. Sin prisas, con detalle.</p>
+    </div>
+    <div class="servicios-grid">
+      <div class="servicio fade-in">
+        <div class="s-num">01</div>
+        <div class="s-name">Corte clásico</div>
+        <div class="s-desc">Corte a tijera o máquina con acabado a navaja. Incluye lavado y secado.</div>
+        <div class="s-price">18€</div>
+      </div>
+      <div class="servicio fade-in">
+        <div class="s-num">02</div>
+        <div class="s-name">Barba completa</div>
+        <div class="s-desc">Perfilado, arreglo y afeitado a navaja con toalla caliente y aceites.</div>
+        <div class="s-price">14€</div>
+      </div>
+      <div class="servicio fade-in">
+        <div class="s-num">03</div>
+        <div class="s-name">Pack corte + barba</div>
+        <div class="s-desc">El combo completo para salir renovado. El servicio más solicitado.</div>
+        <div class="s-price">28€</div>
+      </div>
+      <div class="servicio fade-in">
+        <div class="s-num">04</div>
+        <div class="s-name">Afeitado a navaja</div>
+        <div class="s-desc">Afeitado tradicional con espuma, toalla caliente y masaje facial.</div>
+        <div class="s-price">16€</div>
+      </div>
+      <div class="servicio fade-in">
+        <div class="s-num">05</div>
+        <div class="s-name">Corte infantil</div>
+        <div class="s-desc">Para los más pequeños de la casa. Hasta 12 años.</div>
+        <div class="s-price">12€</div>
+      </div>
+      <div class="servicio fade-in">
+        <div class="s-num">06</div>
+        <div class="s-name">Tratamiento capilar</div>
+        <div class="s-desc">Hidratación profunda, productos premium para cuero cabelludo y cabello.</div>
+        <div class="s-price">22€</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section class="sobre" id="sobre">
+    <div class="sobre-visual fade-in">
+      <div class="sobre-img">💈</div>
+      <div class="sobre-badge">
+        <span>15</span>
+        <span>años<br>en Vigo</span>
+      </div>
+    </div>
+    <div class="sobre-content">
+      <div class="section-tag">Nuestra historia</div>
+      <h2 class="section-title light">Una barbería<br>con carácter</h2>
+      <p class="sobre-text">
+        Navaja & Co. nació en 2008 con una sola idea: recuperar el ritual del buen afeitado y el corte bien hecho. Sin montajes, sin filtros, sin postureo. Solo oficio.
+      </p>
+      <p class="sobre-text">
+        Llevamos más de 15 años en el mismo local del centro de Vigo, y seguimos siendo la barbería de cabecera de cientos de familias de la ciudad.
+      </p>
+      <ul class="sobre-puntos">
+        <li>Maestros barberos con formación especializada</li>
+        <li>Productos naturales y de primera calidad</li>
+        <li>Ambiente tranquilo, sin esperas innecesarias</li>
+        <li>Precios justos para todos los bolsillos</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- RESERVA -->
+  <section class="reserva" id="reserva">
+    <div class="section-tag">Sin esperas</div>
+    <h2 class="section-title">Reserva tu cita</h2>
+    <p class="reserva-sub">Elige el día y el servicio. Te confirmamos por WhatsApp en menos de una hora.</p>
+    <form class="reserva-form" onsubmit="handleReserva(event)">
+      <input type="text" placeholder="Tu nombre" required>
+      <input type="tel" placeholder="Teléfono o WhatsApp" required>
+      <select required>
+        <option value="" disabled selected>Selecciona servicio</option>
+        <option>Corte clásico — 18€</option>
+        <option>Barba completa — 14€</option>
+        <option>Pack corte + barba — 28€</option>
+        <option>Afeitado a navaja — 16€</option>
+        <option>Corte infantil — 12€</option>
+        <option>Tratamiento capilar — 22€</option>
+      </select>
+      <input type="date" required>
+      <button type="submit" class="btn-primary" style="min-width:100%">Solicitar cita</button>
+    </form>
+    <div id="reserva-ok" style="display:none;margin-top:1.5rem;color:var(--gold-light);font-size:0.95rem;">
+      ✓ Solicitud recibida. Te confirmamos por WhatsApp en breve.
+    </div>
+  </section>
+
+  <!-- HORARIO Y CONTACTO -->
+  <section class="horario" id="horario">
+    <div>
+      <div class="section-tag">Cuándo estamos</div>
+      <h2 class="section-title">Horario</h2>
+      <table class="horario-table">
+        <tr><td>Lunes</td><td>9:30 – 20:00</td></tr>
+        <tr><td>Martes</td><td>9:30 – 20:00</td></tr>
+        <tr><td>Miércoles</td><td>9:30 – 20:00</td></tr>
+        <tr><td>Jueves</td><td>9:30 – 20:00</td></tr>
+        <tr class="hoy"><td>Viernes</td><td>9:30 – 21:00</td></tr>
+        <tr class="hoy"><td>Sábado</td><td>9:00 – 15:00</td></tr>
+        <tr><td>Domingo</td><td>Cerrado</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="section-tag">Dónde encontrarnos</div>
+      <h2 class="section-title">Contacto</h2>
+      <div class="horario-contact">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Dirección</div>
+            <div class="contact-value">Calle Príncipe 24, Vigo</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Teléfono</div>
+            <div class="contact-value">986 123 456</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">💬</div>
+          <div>
+            <div class="contact-label">WhatsApp</div>
+            <div class="contact-value">+34 612 345 678</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📸</div>
+          <div>
+            <div class="contact-label">Instagram</div>
+            <div class="contact-value">@navajaandco</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Navaja & Co.</div>
+    <div class="footer-copy">© 2025 Navaja & Co. Barbería · Vigo</div>
+    <div class="footer-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#reserva">Reservar</a>
+      <a href="#horario">Contacto</a>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Form
+    function handleReserva(e) {
+      e.preventDefault();
+      document.getElementById('reserva-ok').style.display = 'block';
+      e.target.style.display = 'none';
+    }
+
+    // Highlight today in schedule
+    const dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+    const hoy = dias[new Date().getDay()];
+    document.querySelectorAll('.horario-table tr').forEach(tr => {
+      if (tr.cells[0] && tr.cells[0].textContent === hoy) {
+        tr.classList.add('hoy');
+      } else {
+        tr.classList.remove('hoy');
+      }
+    });
+  </script>
+</body>
+</html>
